@@ -5,7 +5,7 @@ import ListProductService from '../services/ListProductService';
 import ShowProductService from '../services/ShowProductService';
 import UpdateProductService from '../services/UpdateProductService';
 
-export class ProductsController {
+export default class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {
     const listProducts = new ListProductService();
 
