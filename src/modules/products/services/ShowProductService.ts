@@ -8,10 +8,10 @@ interface IRequest {
 }
 
 export class ShowProductService {
-  async execute({ id }: IRequest): Promise<Product | undefined> {
+  async execute({ id }: IRequest): Promise<Product> {
     const productsRepository = getCustomRepository(ProductRepository);
 
-    const product = productsRepository.findOne({ id });
+    const product = await productsRepository.findOne(id);
 
     if (!product) {
       throw new AppError('Product not found');
