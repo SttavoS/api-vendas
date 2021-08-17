@@ -7,7 +7,7 @@ export default class AuthController {
 
     const authenticate = new LoginService();
 
-    const user = authenticate.execute({ email, password });
+    const user = await authenticate.execute({ email, password });
 
     return response.json(user);
   }
