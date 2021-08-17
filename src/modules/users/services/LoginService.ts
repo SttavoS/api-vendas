@@ -1,6 +1,7 @@
 import { AppError } from '@shared/errors/AppError';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import authConfig from '@config/auth';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
@@ -30,11 +31,15 @@ export default class LoginService {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const token = sign({}, 'f474d2c44f5ec947bd1515666c793879', {
-      subject: user.id,
-      expiresIn: '1d',
-    });
+    const token = this.generateToken(user);
 
     return { user, token };
+  }
+
+  private generateToken(user: User) {
+    return sign({}, authConfig.jwt.secret, {
+      subject: user.id,
+      expiresIn: authConfig.jwt.expireIn,
+    });
   }
 }
