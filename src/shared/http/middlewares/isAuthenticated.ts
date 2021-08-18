@@ -3,6 +3,12 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 
+interface TokenPayload {
+  iat: number;
+  ext: number;
+  sub: string;
+}
+
 export default function isAuthenticated(
   request: Request,
   response: Response,
@@ -14,10 +20,16 @@ export default function isAuthenticated(
     throw new AppError('JWT Token is missing.');
   }
 
-  const [_, token] = authHeader.split(' ');
+  const [, token] = authHeader.split(' ');
 
   try {
-    const decodeToken = verify(token, authConfig.jwt.secret);
+    const decodedToken = verify(token, authConfig.jwt.secret);
+
+    const { sub } = decodedToken as TokenPayload;
+
+    request.user = {
+      id: sub,
+    };
 
     return next();
   } catch {
