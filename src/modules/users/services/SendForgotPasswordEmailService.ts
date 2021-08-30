@@ -1,5 +1,6 @@
 import { AppError } from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
+import path from 'path';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
 import UserTokensRepository from '../typeorm/repositories/UserTokensRepository';
 import EtherealMail from '@config/mail/EtherealMail';
@@ -19,7 +20,14 @@ export default class SendForgotPasswordEmailService {
       throw new AppError('User does not exits.', 404);
     }
 
-    const token = await userTokensRepository.generate(user.id);
+    const { token } = await userTokensRepository.generate(user.id);
+
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot-password.hbs',
+    );
 
     await EtherealMail.sendMail({
       to: {
@@ -28,10 +36,10 @@ export default class SendForgotPasswordEmailService {
       },
       subject: '[API Vendas] Recuperação de senha',
       templateData: {
-        template: `Solicitação de redefinição de senha recebida: ${token.token}`,
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token: token.token,
+          link: `http://localhost:3000/reset_password?token=${token}`,
         },
       },
     });
