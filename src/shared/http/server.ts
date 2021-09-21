@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
@@ -9,7 +10,6 @@ import '@shared/typeorm';
 import uploadConfig from '@config/upload';
 
 const app = express();
-const port = 3333;
 // TODO: Refarorar, separando em um arquivo app.ts
 app.use(cors());
 app.use(express.json());
@@ -34,6 +34,4 @@ app.use(
   },
 );
 
-app.listen(port, () => {
-  console.log(`Server is running at port ${port}`);
-});
+app.listen(process.env.APP_PORT || 3333);
