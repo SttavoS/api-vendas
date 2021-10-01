@@ -1,10 +1,10 @@
 export default {
   type: 'postgres',
-  host: process.env.TYPEORM_HOST,
-  port: process.env.TYPEORM_PORT,
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   entities: ['./src/modules/**/typeorm/entities/*.ts'],
   migrations: ['./src/shared/typeorm/migrations/*.ts'],
   cli: {
