@@ -23,6 +23,12 @@ export default class OrdersProducts {
   @JoinColumn({ name: 'order_id' })
   product: Product;
 
+  @Column()
+  order_id: string;
+
+  @Column()
+  product_id: string;
+
   @Column('decimal')
   price: number;
 
