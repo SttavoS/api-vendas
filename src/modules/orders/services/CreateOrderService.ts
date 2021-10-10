@@ -45,6 +45,7 @@ export default class CreateOrderService {
     if (checkNonexistentProductsIds.length) {
       throw new AppError(
         `Could not find product ${checkNonexistentProductsIds[0].id}`,
+        422,
       );
     }
 
@@ -57,6 +58,7 @@ export default class CreateOrderService {
     if (quantityAvailable.length) {
       throw new AppError(
         `The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`,
+        422,
       );
     }
 
