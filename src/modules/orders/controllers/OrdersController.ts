@@ -10,7 +10,7 @@ export default class OrdersController {
 
     const order = await createOrder.execute({ customer_id, products });
 
-    return response.status(204).send(order);
+    return response.status(201).send(order);
   }
 
   async show(request: Request, response: Response): Promise<Response> {
