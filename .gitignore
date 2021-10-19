@@ -9,3 +9,5 @@ dist
 
 uploads/*
 !uploads/.gitkeep
+
+.docker/postgres/data
